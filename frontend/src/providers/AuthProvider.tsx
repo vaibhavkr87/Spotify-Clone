@@ -26,12 +26,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					// init socket
 					if (userId) initSocket(userId);
 				}
-			} catch (error: any) {
+			 } catch (error: any) {
 				updateApiToken(null);
-				console.log("Error in auth provider", error);
-			} finally {
-				setLoading(false);
+				console.log("Error in auth provider:", error.response?.data || error.message || error);
 			}
+			
+			setLoading(false);
 		};
 
 		initAuth();

@@ -1,5 +1,7 @@
-import express from "express";
+
 import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
 import { clerkMiddleware } from "@clerk/express";
 import fileUpload from "express-fileupload";
 import path from "path";
@@ -8,17 +10,18 @@ import fs from "fs";
 import { createServer } from "http";
 import cron from "node-cron";
 
-import { initializeSocket } from "./lib/socket.js";
+import { initializeSocket } from "./src/lib/socket.js";
 
-import { connectDB } from "./lib/db.js";
-import userRoutes from "./routes/user.route.js";
-import adminRoutes from "./routes/admin.route.js";
-import authRoutes from "./routes/auth.route.js";
-import songRoutes from "./routes/song.route.js";
-import albumRoutes from "./routes/album.route.js";
-import statRoutes from "./routes/stat.route.js";
+import { connectDB } from "./src/lib/db.js";
+connectDB();
+import userRoutes from "./src/routes/user.route.js";
+import adminRoutes from "./src/routes/admin.route.js";
+import authRoutes from "./src/routes/auth.route.js";
+import songRoutes from "./src/routes/song.route.js";
+import albumRoutes from "./src/routes/album.route.js";
+import statRoutes from "./src/routes/stat.route.js";
 
-dotenv.config();
+
 
 const __dirname = path.resolve();
 const app = express();
@@ -26,10 +29,10 @@ const PORT = process.env.PORT;
 
 const httpServer = createServer(app);
 initializeSocket(httpServer);
-connectDB();
+
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: "http://localhost:5173",
 		credentials: true,
 	})
 );

@@ -128,7 +128,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	fetchFeaturedSongs: async () => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axiosInstance.get("/songs/featured");
+			const response = await axiosInstance.get("/songs/featured");  
 			set({ featuredSongs: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });

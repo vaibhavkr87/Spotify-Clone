@@ -17,11 +17,22 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
 	checkAdminStatus: async () => {
 		set({ isLoading: true, error: null });
+	
 		try {
 			const response = await axiosInstance.get("/admin/check");
 			set({ isAdmin: response.data.admin });
 		} catch (error: any) {
-			set({ isAdmin: false, error: error.response.data.message });
+			console.error("checkAdminStatus error:", error);
+	
+			let errorMessage = "Unknown error";
+	
+			if (error.response?.data?.message) {
+				errorMessage = error.response.data.message;
+			} else if (error.message) {
+				errorMessage = error.message;
+			}
+	
+			set({ isAdmin: false, error: errorMessage });
 		} finally {
 			set({ isLoading: false });
 		}
